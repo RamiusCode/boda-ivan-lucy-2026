@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Portada from "../components/Portada.astro";
+import NombresFlores from "../components/NombresFlores.astro";
+import Dedicatoria from "../components/Dedicatoria.astro";
+import Bendicion from "../components/Bendicion.astro";
+import NombrePadres from "../components/NombresPadres.astro";
+import Fecha from "../components/Fecha.astro";
+import Contador from "../components/Contador.astro";
+import DireccionCeremonia from "../components/DireccionCeremonia.astro";
+import DireccionRecepcion from "../components/DireccionRecepcion.astro";
+import Reservas from "../components/Reservas.astro";
+import SugerenciaRegalo from "../components/SugerenciaRegalo.astro";
+import CodigoVestimenta from "../components/CodigoVestimenta.astro";
+import Restriccion from "../components/Restriccion.astro";
+import Confirmar from "../components/Confirmar.astro";
+import DespedidaDedicatoria from "../components/DespedidaDedicatoria.astro";
+import Des from "../components/Des.astro";
+---
+
+<Layout title="Boda">
+    <Portada />
+    <div id="contenido-principal">
+        <NombresFlores />
+        <Dedicatoria />
+        <Bendicion />
+        <NombrePadres />
+        <Fecha />
+        <Contador />
+        <DireccionCeremonia />
+        <DireccionRecepcion />
+        <Reservas numeroPases={1} />
+        <SugerenciaRegalo />
+        <CodigoVestimenta />
+        <Restriccion />
+        <Confirmar />
+        <DespedidaDedicatoria />
+        <Des />
+    </div>
+</Layout>
