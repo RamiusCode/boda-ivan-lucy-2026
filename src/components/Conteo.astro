@@ -1,0 +1,458 @@
+---
+// Conteo.astro
+---
+
+<section class="relative w-full py-16">
+    <div class="max-w-md mx-auto" id="wrapper-conteo">
+        <!-- ✨ AVISO DOMINGO -->
+        <div class="text-center mb-8 opacity-0 px-6" id="aviso-domingo-text">
+            <!-- Cuadro dorado elegante -->
+            <div
+                style="
+                    border: 1.5px solid rgba(156,122,46,0.6);
+                    border-radius: 12px;
+                    padding: 18px 20px;
+                    background: linear-gradient(135deg, rgba(156,122,46,0.08) 0%, rgba(156,122,46,0.04) 100%);
+                    position: relative;
+                    overflow: hidden;
+                "
+            >
+                <!-- Esquinas decorativas -->
+                <div
+                    style="position:absolute; top:8px; left:8px; width:14px; height:14px; border-top:1.5px solid #9C7A2E; border-left:1.5px solid #9C7A2E; border-radius:2px;"
+                >
+                </div>
+                <div
+                    style="position:absolute; top:8px; right:8px; width:14px; height:14px; border-top:1.5px solid #9C7A2E; border-right:1.5px solid #9C7A2E; border-radius:2px;"
+                >
+                </div>
+                <div
+                    style="position:absolute; bottom:8px; left:8px; width:14px; height:14px; border-bottom:1.5px solid #9C7A2E; border-left:1.5px solid #9C7A2E; border-radius:2px;"
+                >
+                </div>
+                <div
+                    style="position:absolute; bottom:8px; right:8px; width:14px; height:14px; border-bottom:1.5px solid #9C7A2E; border-right:1.5px solid #9C7A2E; border-radius:2px;"
+                >
+                </div>
+
+                <!-- Rombo superior -->
+                <div class="flex items-center justify-center gap-2 mb-3">
+                    <div
+                        style="height:1px; width:30px; background: linear-gradient(to right, transparent, #9C7A2E);"
+                    >
+                    </div>
+                    <span style="color:#9C7A2E; font-size:10px;">✦</span>
+                    <div
+                        style="height:1px; width:30px; background: linear-gradient(to left, transparent, #9C7A2E);"
+                    >
+                    </div>
+                </div>
+
+                <!-- Texto principal -->
+                <p
+                    class="text-[#9C7A2E] tracking-[0.15em] uppercase text-xs mb-3 font-semibold"
+                >
+                    Estimado invitado
+                </p>
+
+                <p
+                    class="font-charm text-[#0F3D2E] text-xl md:text-2xl leading-snug mb-3"
+                >
+                    Estás cordialmente invitado a continuar compartiendo con
+                    nosotros al día siguiente, domingo, en el mismo salón de
+                    eventos
+                </p>
+
+                <!-- Hora destacada -->
+                <div class="flex items-center justify-center gap-3 mt-3">
+                    <div
+                        style="height:1px; flex:1; background: linear-gradient(to right, transparent, rgba(156,122,46,0.4));"
+                    >
+                    </div>
+
+                    <div
+                        style="height:1px; flex:1; background: linear-gradient(to left, transparent, rgba(156,122,46,0.4));"
+                    >
+                    </div>
+                </div>
+
+                <!-- Rombo inferior -->
+                <div class="flex items-center justify-center gap-2 mt-3">
+                    <div
+                        style="height:1px; width:30px; background: linear-gradient(to right, transparent, #9C7A2E);"
+                    >
+                    </div>
+                    <span style="color:#9C7A2E; font-size:10px;">✦</span>
+                    <div
+                        style="height:1px; width:30px; background: linear-gradient(to left, transparent, #9C7A2E);"
+                    >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECEPCIÓN SOCIAL -->
+        <div class="text-center opacity-0 px-6" id="conteo-content">
+            <h3
+                class="text-[#9C7A2E] tracking-[0.2em] uppercase text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold mb-6"
+            >
+                Recepción Social
+            </h3>
+
+            <!-- Flores laterales -->
+            <img
+                src="/imagenes/hojadorada.png"
+                alt="hoja dorada"
+                class="absolute left-0 top-15 md:top-24 w-18 h-18 lg:w-28 lg:h-28 md:w-20 md:h-20 opacity-0 pointer-events-none z-10"
+                id="hoja-dorada-conteo-left"
+            />
+            <img
+                src="/imagenes/hojadorada.png"
+                alt="hoja dorada"
+                class="absolute right-0 top-15 md:top-24 w-18 h-18 lg:w-28 lg:h-28 md:w-20 md:h-20 opacity-0 pointer-events-none z-10 scale-x-[-1]"
+                id="hoja-dorada-conteo-right"
+            />
+            <img
+                src="/imagenes/florlateral.png"
+                alt="hojas"
+                class="absolute left-0 top-20 md:top-24 w-18 h-18 lg:w-28 lg:h-28 md:w-20 md:h-20 opacity-0 pointer-events-none z-[11]"
+                id="hoja-conteo-left"
+            />
+            <img
+                src="/imagenes/florlateral.png"
+                alt="hojas"
+                class="absolute right-0 top-20 md:top-24 w-18 h-18 lg:w-28 lg:h-28 md:w-20 md:h-20 opacity-0 pointer-events-none z-[11] scale-x-[-1]"
+                id="hoja-conteo-right"
+            />
+
+            <!-- Ícono -->
+            <div class="flex justify-center mb-6">
+                <img
+                    src="/iconos/recepcion.png"
+                    alt="Icono Recepción"
+                    class="w-16 h-16 md:w-20 md:h-20 object-contain dorado-filter"
+                    id="icono-conteo"
+                />
+            </div>
+
+            <!-- Nombre salón -->
+            <p
+                class="font-charm text-[#0F3D2E] text-2xl md:text-3xl lg:text-3xl xl:text-4xl mb-3"
+            >
+                Salón de Eventos "Plenilunio"
+            </p>
+
+            <!-- Dirección -->
+            <p class="text-[#0F3D2E]/70 text-xl md:text-2xl mb-6">
+                Av. Collpapampa casi La Floresta, Tiquipaya
+            </p>
+
+            <!-- Hora y botón -->
+            <div class="flex items-center justify-center gap-3 relative">
+                <div
+                    class="bg-transparent border-2 border-gray-400 rounded px-6 py-2.5"
+                >
+                    <p class="text-sm md:text-2xl text-[#0F3D2E] font-semibold">
+                        17:00 HRS.
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <a
+                        href="https://maps.app.goo.gl/j67GwyMb1NrWF7ey9"
+                        target="_blank"
+                        class="bg-[#4E5F49] hover:bg-[#3d4a39]
+                    text-white px-6 py-2.5 rounded text-sm md:text-base
+                    lg:text-lg xl:text-xl font-semibold transition-all
+                    duration-300 shadow-md hover:shadow-lg block"
+                        id="boton-conteo"
+                    >
+                        Ver ubicación
+                    </a>
+
+                    <img
+                        src="/imagenes/mano.png"
+                        alt="Presionar aquí"
+                        class="absolute -bottom-6 -right-6 md:-bottom-8 md:-right-8 lg:-bottom-10 lg:-right-10 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain opacity-0 pointer-events-none z-20"
+                        id="mano-conteo-pointer"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        import { gsap } from "gsap";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        const initConteo = () => {
+            gsap.set("#aviso-domingo-text", { opacity: 0, y: 20 });
+            gsap.set("#conteo-content", { opacity: 0, y: 30 });
+            gsap.set("#hoja-conteo-left", {
+                opacity: 0,
+                x: -20,
+                rotation: 0,
+                scale: 1,
+            });
+            gsap.set("#hoja-conteo-right", {
+                opacity: 0,
+                x: 20,
+                rotation: 0,
+                scaleX: -1,
+                scaleY: 1,
+            });
+            gsap.set("#hoja-dorada-conteo-left", {
+                opacity: 0,
+                x: -20,
+                rotation: 0,
+                scale: 1,
+            });
+            gsap.set("#hoja-dorada-conteo-right", {
+                opacity: 0,
+                x: 20,
+                rotation: 0,
+                scaleX: -1,
+                scaleY: 1,
+            });
+            gsap.set("#mano-conteo-pointer", { opacity: 0, scale: 0.8 });
+
+            ScrollTrigger.create({
+                trigger: "#wrapper-conteo",
+                start: "top 80%",
+                end: "top 20%",
+
+                onEnter: () => {
+                    const tl = gsap.timeline();
+
+                    tl.to(
+                        "#aviso-domingo-text",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1.2,
+                            ease: "power3.out",
+                        },
+                        0,
+                    )
+                        .to(
+                            "#conteo-content",
+                            {
+                                opacity: 1,
+                                y: 0,
+                                duration: 1.2,
+                                ease: "power3.out",
+                            },
+                            0.5,
+                        )
+                        .to(
+                            "#hoja-conteo-left",
+                            {
+                                opacity: 0.8,
+                                x: 0,
+                                duration: 1,
+                                ease: "power2.out",
+                            },
+                            0.8,
+                        )
+                        .to(
+                            "#hoja-conteo-right",
+                            {
+                                opacity: 0.8,
+                                x: 0,
+                                duration: 1,
+                                ease: "power2.out",
+                            },
+                            0.8,
+                        )
+                        .to(
+                            "#hoja-dorada-conteo-left",
+                            {
+                                opacity: 0.9,
+                                x: 0,
+                                duration: 1,
+                                ease: "power2.out",
+                            },
+                            1.5,
+                        )
+                        .to(
+                            "#hoja-dorada-conteo-right",
+                            {
+                                opacity: 0.9,
+                                x: 0,
+                                duration: 1,
+                                ease: "power2.out",
+                            },
+                            1.5,
+                        )
+                        .to(
+                            "#mano-conteo-pointer",
+                            {
+                                opacity: 1,
+                                scale: 1,
+                                duration: 0.5,
+                                ease: "back.out(2)",
+                            },
+                            0.8,
+                        );
+
+                    gsap.to("#hoja-conteo-left", {
+                        y: -10,
+                        x: -5,
+                        rotation: -8,
+                        duration: 3.5,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 2.5,
+                    });
+                    gsap.to("#hoja-conteo-right", {
+                        y: -8,
+                        x: 5,
+                        rotation: 8,
+                        duration: 3.8,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 2.7,
+                    });
+                    gsap.to("#hoja-dorada-conteo-left", {
+                        y: -12,
+                        rotation: -10,
+                        duration: 4,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 2.8,
+                    });
+                    gsap.to("#hoja-dorada-conteo-right", {
+                        y: -11,
+                        rotation: 10,
+                        duration: 4.3,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 3,
+                    });
+                    gsap.to("#hoja-dorada-conteo-left", {
+                        scale: 0.85,
+                        duration: 4.5,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 3.2,
+                    });
+                    gsap.to("#hoja-dorada-conteo-right", {
+                        scaleX: -0.85,
+                        scaleY: 0.85,
+                        duration: 5,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 3.5,
+                    });
+                    gsap.to("#hoja-conteo-left", {
+                        x: -8,
+                        duration: 5.5,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 3.8,
+                    });
+                    gsap.to("#hoja-conteo-right", {
+                        x: 8,
+                        duration: 6,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: 4,
+                    });
+                    gsap.to("#mano-conteo-pointer", {
+                        scale: 0.9,
+                        duration: 0.6,
+                        ease: "power1.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        delay: 3,
+                    });
+                },
+
+                onLeaveBack: () => {
+                    gsap.killTweensOf("#mano-conteo-pointer");
+                    gsap.killTweensOf("#hoja-conteo-left");
+                    gsap.killTweensOf("#hoja-conteo-right");
+                    gsap.killTweensOf("#hoja-dorada-conteo-left");
+                    gsap.killTweensOf("#hoja-dorada-conteo-right");
+
+                    const tl = gsap.timeline();
+
+                    tl.to(
+                        "#conteo-content, #aviso-domingo-text, #hoja-conteo-left, #hoja-conteo-right, #hoja-dorada-conteo-left, #hoja-dorada-conteo-right, #mano-conteo-pointer",
+                        { opacity: 0, duration: 0.5, ease: "power2.in" },
+                    )
+                        .to(
+                            "#conteo-content",
+                            { y: 30, duration: 0.5, ease: "power2.in" },
+                            "<",
+                        )
+                        .to(
+                            "#aviso-domingo-text",
+                            { y: 20, duration: 0.5, ease: "power2.in" },
+                            "<",
+                        )
+                        .to(
+                            "#hoja-conteo-left",
+                            { x: -20, y: 0, duration: 0.5, ease: "power2.in" },
+                            "<",
+                        )
+                        .to(
+                            "#hoja-conteo-right",
+                            { x: 20, y: 0, duration: 0.5, ease: "power2.in" },
+                            "<",
+                        )
+                        .to(
+                            "#hoja-dorada-conteo-left",
+                            { x: -20, y: 0, duration: 0.5, ease: "power2.in" },
+                            "<",
+                        )
+                        .to(
+                            "#hoja-dorada-conteo-right",
+                            { x: 20, y: 0, duration: 0.5, ease: "power2.in" },
+                            "<",
+                        )
+                        .to(
+                            "#mano-conteo-pointer",
+                            { scale: 0.8, duration: 0.5, ease: "power2.in" },
+                            "<",
+                        )
+                        .set("#hoja-conteo-left", { rotation: 0, scale: 1 })
+                        .set("#hoja-conteo-right", {
+                            rotation: 0,
+                            scaleX: -1,
+                            scaleY: 1,
+                        })
+                        .set("#hoja-dorada-conteo-left", {
+                            rotation: 0,
+                            scale: 1,
+                        })
+                        .set("#hoja-dorada-conteo-right", {
+                            rotation: 0,
+                            scaleX: -1,
+                            scaleY: 1,
+                        });
+                },
+            });
+        };
+
+        document.addEventListener("DOMContentLoaded", initConteo);
+        document.addEventListener("astro:page-load", initConteo);
+    </script>
+
+    <style>
+        .dorado-filter {
+            filter: brightness(0) saturate(100%) invert(56%) sepia(77%)
+                saturate(419%) hue-rotate(5deg) brightness(94%) contrast(92%);
+        }
+    </style>
+</section>
