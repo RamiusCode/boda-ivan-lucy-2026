@@ -2,18 +2,10 @@
 // src/components/Portada.astro - Portada elegante con hojas animadas y fondo texturizado
 ---
 
-<!-- Precarga del audio ANTES de que el usuario toque nada -->
-<audio
-    id="audio-portada"
-    src="/musica/melodia.mp3"
-    preload="auto"
-    loop
-    style="display:none"></audio>
-
 <section
     class="fixed inset-0 w-full h-screen flex justify-center z-[10000]"
     id="portada-section"
-    style="background-color: #ffffff; background-image: url('/imagenes/BlancoTextura.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;"
+    style="background-color: #ffffff; background-image: url('/imagenes/BlancoTextura.png'); background-size: cover; background-position: center; background-repeat: no-repeat;"
 >
     <div class="relative w-full max-w-[480px]">
         <!-- Decoración floral superior -->
@@ -23,9 +15,6 @@
                     src="/imagenes/floriz.webp"
                     alt=""
                     class="w-full h-full object-contain"
-                    loading="eager"
-                    fetchpriority="high"
-                    decoding="async"
                 />
             </div>
             <div id="flor-der" class="absolute top-0 right-0 w-28 h-28">
@@ -33,9 +22,6 @@
                     src="/imagenes/florde.webp"
                     alt=""
                     class="w-full h-full object-contain"
-                    loading="eager"
-                    fetchpriority="high"
-                    decoding="async"
                 />
             </div>
         </div>
@@ -46,18 +32,12 @@
             alt="hoja dorada izquierda"
             class="absolute left-2 top-[42%] w-18 h-18 md:w-28 md:h-28 pointer-events-none z-[5]"
             id="hoja-dorada-izq"
-            loading="eager"
-            fetchpriority="low"
-            decoding="async"
         />
         <img
             src="/imagenes/hojadorada.png"
             alt="hoja dorada derecha"
             class="absolute right-2 top-[42%] w-18 h-18 md:w-28 md:h-28 pointer-events-none z-[5] scale-x-[-1]"
             id="hoja-dorada-der"
-            loading="eager"
-            fetchpriority="low"
-            decoding="async"
         />
 
         <!-- FLORES LATERALES (capa superior) -->
@@ -66,18 +46,12 @@
             alt="flor lateral izquierda"
             class="absolute left-0 top-[41%] w-18 h-18 md:w-28 md:h-28 pointer-events-none z-[6]"
             id="flor-lateral-izq"
-            loading="eager"
-            fetchpriority="low"
-            decoding="async"
         />
         <img
             src="/imagenes/florlateral.png"
             alt="flor lateral derecha"
             class="absolute right-0 top-[41%] w-18 h-18 md:w-28 md:h-28 pointer-events-none z-[6] scale-x-[-1]"
             id="flor-lateral-der"
-            loading="eager"
-            fetchpriority="low"
-            decoding="async"
         />
 
         <!-- Contenido principal -->
@@ -142,9 +116,6 @@
                         src="/imagenes/sobre.webp"
                         alt="Sobre de invitación"
                         class="w-[280px] drop-shadow-lg"
-                        loading="eager"
-                        fetchpriority="high"
-                        decoding="async"
                     />
                 </div>
             </div>
@@ -181,29 +152,9 @@
     import { gsap } from "gsap";
 
     if (typeof window !== "undefined") {
-        // ── Precarga forzada del audio (fuerza buffering inmediato) ──────
-        const audioEl = document.getElementById(
-            "audio-portada",
-        ) as HTMLAudioElement | null;
-        if (audioEl) {
-            // En iOS/Safari el preload="auto" no siempre basta;
-            // cargar explícitamente el buffer al primer evento de interacción
-            // que el navegador permita (touchstart / mousedown) para tenerlo listo.
-            const primeraInteraccion = () => {
-                audioEl.load();
-                document.removeEventListener("touchstart", primeraInteraccion);
-                document.removeEventListener("mousedown", primeraInteraccion);
-            };
-            document.addEventListener("touchstart", primeraInteraccion, {
-                once: true,
-                passive: true,
-            });
-            document.addEventListener("mousedown", primeraInteraccion, {
-                once: true,
-            });
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
+            console.log("✨ Iniciando animaciones elegantes de portada...");
+
             document.body.classList.add("portada-activa");
 
             // ── Estado inicial ──────────────────────────────────────
@@ -483,6 +434,8 @@
             const portadaSection = document.getElementById("portada-section");
 
             sobreContainer?.addEventListener("click", () => {
+                console.log("📨 Abriendo invitación y reproduciendo música...");
+
                 gsap.killTweensOf("#flor-izq");
                 gsap.killTweensOf("#flor-der");
                 gsap.killTweensOf("#flor-lateral-izq");
@@ -490,21 +443,12 @@
                 gsap.killTweensOf("#hoja-dorada-izq");
                 gsap.killTweensOf("#hoja-dorada-der");
 
-                // Usar el audio ya precargado (no crear uno nuevo)
-                const audio =
-                    (document.getElementById(
-                        "audio-portada",
-                    ) as HTMLAudioElement) || new Audio("/musica/melodia.mp3");
+                const audio = new Audio("/musica/melodia.mp3");
                 audio.loop = true;
                 audio.volume = 0.5;
-                audio.currentTime = 0;
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(() => {
-                        // En algunos navegadores necesita un segundo intento
-                        setTimeout(() => audio.play().catch(() => {}), 300);
-                    });
-                }
+                audio.play().catch((error) => {
+                    console.log("❌ Error al reproducir audio:", error);
+                });
 
                 (window as any).audioGlobal = audio;
                 (window as any).estaReproduciendoGlobal = true;
@@ -574,15 +518,19 @@
                                 document.body.classList.remove(
                                     "portada-activa",
                                 );
+                                console.log("🔓 Scroll desbloqueado");
                             },
                             onComplete: () => {
                                 portadaSection?.remove();
+                                console.log("✅ Portada eliminada del DOM");
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                             },
                         },
                         0.5,
                     );
             });
+
+            console.log("✨ Sistema de portada elegante con hojas listo!");
         });
     }
 </script>
