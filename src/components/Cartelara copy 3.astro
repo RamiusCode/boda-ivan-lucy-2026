@@ -1,0 +1,189 @@
+---
+// Cartelera.astro
+---
+
+<section class="relative w-full py-8 px-4" id="seccion-cartelera">
+    <!-- TÍTULO -->
+    <div class="text-center mb-8 opacity-0" id="cartelera-titulo">
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="h-px w-16 bg-[#9C7A2E]/40"></div>
+            <span class="text-[#9C7A2E] text-base">✦</span>
+            <div class="h-px w-16 bg-[#9C7A2E]/40"></div>
+        </div>
+        <h3
+            class="text-[#9C7A2E] tracking-[0.2em] uppercase text-xl md:text-2xl font-semibold mb-2"
+        >
+            Cartelera Musical
+        </h3>
+        <p class="font-charm text-[#0F3D2E] text-2xl md:text-3xl">
+            Los artistas de tu noche
+        </p>
+        <div class="flex items-center justify-center gap-3 mt-4">
+            <div class="h-px w-16 bg-[#9C7A2E]/40"></div>
+            <span class="text-[#9C7A2E] text-base">✦</span>
+            <div class="h-px w-16 bg-[#9C7A2E]/40"></div>
+        </div>
+    </div>
+
+    <!-- GRID DOS COLUMNAS (12 grupos) -->
+    <div class="max-w-lg mx-auto grid grid-cols-2 gap-3" id="cartelera-grid">
+    </div>
+
+    <!-- ÚLTIMO GRUPO CENTRADO -->
+    <div
+        class="max-w-lg mx-auto mt-3 flex justify-center"
+        id="cartelera-ultimo"
+    >
+    </div>
+
+    <!-- Crédito inferior -->
+    <div
+        class="flex items-center justify-center gap-4 mt-8 opacity-0"
+        id="credito-cartelera"
+    >
+        <div
+            style="height:1px; flex:1; max-width:80px; background: linear-gradient(to right, transparent, #9C7A2E);"
+        >
+        </div>
+        <span
+            class="text-[#9C7A2E]/60 text-xs tracking-[0.3em] uppercase font-charm"
+            >Música en vivo</span
+        >
+        <div
+            style="height:1px; flex:1; max-width:80px; background: linear-gradient(to left, transparent, #9C7A2E);"
+        >
+        </div>
+    </div>
+</section>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    const grupos = [
+        { nombre: "Grupo 1", imagen: "/imagenes/grupo1.png" },
+        { nombre: "Grupo 2", imagen: "/imagenes/grupo2.png" },
+        { nombre: "Grupo 3", imagen: "/imagenes/grupo3.png" },
+        { nombre: "Grupo 4", imagen: "/imagenes/grupo4.png" },
+        { nombre: "Grupo 5", imagen: "/imagenes/grupo5.png" },
+        { nombre: "Grupo 6", imagen: "/imagenes/grupo6.png" },
+        { nombre: "Grupo 7", imagen: "/imagenes/grupo7.png" },
+        { nombre: "Grupo 8", imagen: "/imagenes/grupo8.png" },
+        { nombre: "Grupo 9", imagen: "/imagenes/grupo9.png" },
+        { nombre: "Grupo 10", imagen: "/imagenes/grupo10.png" },
+        { nombre: "Grupo 11", imagen: "/imagenes/grupo11.png" },
+        { nombre: "Grupo 12", imagen: "/imagenes/grupo12.png" },
+        { nombre: "Grupo 13", imagen: "/imagenes/grupo13.png" },
+    ];
+
+    function crearCard(g: { nombre: string; imagen: string }, ancho: string) {
+        const card = document.createElement("div");
+        card.className = "grupo-card opacity-0";
+        card.style.cssText = `
+            width: ${ancho};
+            border-radius: 16px;
+            border: 1px solid rgba(156,122,46,0.25);
+            overflow: hidden;
+            background: rgba(15,61,46,0.04);
+            display: flex;
+            flex-direction: column;
+        `;
+
+        card.innerHTML = `
+            <!-- Nombre -->
+            <div style="padding: 8px 10px 6px; text-align:center; border-bottom: 1px solid rgba(156,122,46,0.15);">
+                <p style="color:#9C7A2E; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; font-weight:600; line-height:1.2;">${g.nombre}</p>
+            </div>
+
+            <!-- Imagen completa sin recorte -->
+            <div style="position:relative; overflow:hidden; background:#f9f5ef; display:flex; align-items:center; justify-content:center; min-height:140px;">
+                <img
+                    src="${g.imagen}"
+                    alt="${g.nombre}"
+                    class="card-img"
+                    style="
+                        width: 100%;
+                        height: 100%;
+                        max-height: 200px;
+                        object-fit: contain;
+                        object-position: center;
+                        display: block;
+                        transition: transform 0.5s ease;
+                        padding: 4px;
+                    "
+                />
+                <!-- Borde dorado sutil inferior -->
+                <div style="position:absolute; bottom:0; left:0; right:0; height:2px; background: linear-gradient(to right, transparent, rgba(156,122,46,0.3), transparent); pointer-events:none;"></div>
+            </div>
+        `;
+
+        // Hover imagen
+        const img = card.querySelector(".card-img") as HTMLElement;
+        card.addEventListener("mouseenter", () => {
+            if (img) img.style.transform = "scale(1.04)";
+        });
+        card.addEventListener("mouseleave", () => {
+            if (img) img.style.transform = "scale(1)";
+        });
+
+        return card;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const grid = document.getElementById("cartelera-grid");
+        const ultimo = document.getElementById("cartelera-ultimo");
+
+        // Primeros 12 en el grid de 2 columnas
+        grupos.slice(0, 12).forEach((g) => {
+            if (!grid) return;
+            grid.appendChild(crearCard(g, "100%"));
+        });
+
+        // Grupo 13 centrado, ancho de una columna (~48%)
+        if (ultimo) {
+            const cardUltimo = crearCard(grupos[12], "48%");
+            ultimo.appendChild(cardUltimo);
+        }
+
+        // ── ANIMACIÓN SCROLL ──
+        gsap.set("#cartelera-titulo", { opacity: 0, y: 20 });
+        gsap.set("#credito-cartelera", { opacity: 0 });
+        gsap.set(".grupo-card", { opacity: 0, y: 24 });
+
+        ScrollTrigger.create({
+            trigger: "#seccion-cartelera",
+            start: "top 85%",
+            onEnter: () => {
+                const tl = gsap.timeline();
+                tl.to("#cartelera-titulo", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.9,
+                    ease: "power3.out",
+                })
+                    .to(
+                        ".grupo-card",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            stagger: 0.07,
+                        },
+                        "-=0.4",
+                    )
+                    .to(
+                        "#credito-cartelera",
+                        { opacity: 1, duration: 0.6 },
+                        "-=0.2",
+                    );
+            },
+            onLeaveBack: () => {
+                gsap.set("#cartelera-titulo", { opacity: 0, y: 20 });
+                gsap.set(".grupo-card", { opacity: 0, y: 24 });
+                gsap.set("#credito-cartelera", { opacity: 0 });
+            },
+        });
+    });
+</script>

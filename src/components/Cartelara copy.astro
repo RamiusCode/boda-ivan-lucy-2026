@@ -1,0 +1,502 @@
+---
+// Cartelera.astro
+---
+
+<section class="relative w-full py-8 px-4" id="seccion-cartelera">
+    <!-- TÍTULO -->
+    <div class="text-center mb-8 opacity-0" id="cartelera-titulo">
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="h-px w-16 bg-[#9C7A2E]/40"></div>
+            <span class="text-[#9C7A2E] text-base">✦</span>
+            <div class="h-px w-16 bg-[#9C7A2E]/40"></div>
+        </div>
+        <h3
+            class="text-[#9C7A2E] tracking-[0.2em] uppercase text-xl md:text-2xl font-semibold mb-2"
+        >
+            Cartelera Musical
+        </h3>
+        <p class="font-charm text-[#0F3D2E] text-2xl md:text-3xl">
+            Los artistas de tu noche
+        </p>
+        <div class="flex items-center justify-center gap-3 mt-4">
+            <div class="h-px w-16 bg-[#9C7A2E]/40"></div>
+            <span class="text-[#9C7A2E] text-base">✦</span>
+            <div class="h-px w-16 bg-[#9C7A2E]/40"></div>
+        </div>
+    </div>
+
+    <!-- GRID DOS COLUMNAS -->
+    <div class="max-w-lg mx-auto grid grid-cols-2 gap-3" id="cartelera-grid">
+    </div>
+
+    <!-- Crédito inferior -->
+    <div
+        class="flex items-center justify-center gap-4 mt-8 opacity-0"
+        id="credito-cartelera"
+    >
+        <div
+            style="height:1px; flex:1; max-width:80px; background: linear-gradient(to right, transparent, #9C7A2E);"
+        >
+        </div>
+        <span
+            class="text-[#9C7A2E]/60 text-xs tracking-[0.3em] uppercase font-charm"
+            >Música en vivo</span
+        >
+        <div
+            style="height:1px; flex:1; max-width:80px; background: linear-gradient(to left, transparent, #9C7A2E);"
+        >
+        </div>
+    </div>
+</section>
+
+<!-- AUDIO PLAYER FLOTANTE -->
+<div
+    id="audio-player"
+    class="fixed bottom-0 left-0 right-0 z-50 translate-y-full transition-transform duration-500"
+    style="background: rgba(15,61,46,0.97); backdrop-filter: blur(12px); border-top: 1px solid rgba(156,122,46,0.3);"
+>
+    <div class="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
+        <!-- Imagen mini -->
+        <div
+            class="w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 border border-[#9C7A2E]/30"
+        >
+            <img
+                id="player-img"
+                src=""
+                alt=""
+                class="w-full h-full object-cover object-top"
+            />
+        </div>
+
+        <!-- Info -->
+        <div class="flex-1 min-w-0">
+            <p
+                id="player-nombre"
+                class="text-[#9C7A2E] text-sm font-semibold tracking-wide truncate"
+            >
+            </p>
+            <!-- Barra de progreso -->
+            <div
+                class="mt-1.5 h-1 bg-white/10 rounded-full overflow-hidden cursor-pointer"
+                id="progress-bar"
+            >
+                <div
+                    id="progress-fill"
+                    class="h-full bg-[#9C7A2E] rounded-full transition-none"
+                    style="width:0%"
+                >
+                </div>
+            </div>
+            <div class="flex justify-between mt-0.5">
+                <span id="time-current" class="text-white/40 text-[10px]"
+                    >0:00</span
+                >
+                <span id="time-total" class="text-white/40 text-[10px]"
+                    >0:00</span
+                >
+            </div>
+        </div>
+
+        <!-- Controles -->
+        <div class="flex items-center gap-2 flex-shrink-0">
+            <button
+                id="btn-play-pause"
+                class="w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-95"
+                style="background: rgba(156,122,46,0.2); border: 1px solid rgba(156,122,46,0.4);"
+            >
+                <svg
+                    id="icon-play"
+                    class="w-4 h-4"
+                    fill="#9C7A2E"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+                <svg
+                    id="icon-pause"
+                    class="w-4 h-4 hidden"
+                    fill="#9C7A2E"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+                </svg>
+            </button>
+            <button
+                id="btn-cerrar-player"
+                class="w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-95"
+                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.5)"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    const grupos = [
+        {
+            nombre: "Grupo 1",
+            imagen: "/imagenes/grupo1.png",
+            audio: "/musica/grupo1.mp3",
+        },
+        {
+            nombre: "Grupo 2",
+            imagen: "/imagenes/grupo2.png",
+            audio: "/musica/grupo2.mp3",
+        },
+        {
+            nombre: "Grupo 3",
+            imagen: "/imagenes/grupo3.png",
+            audio: "/musica/grupo3.mp3",
+        },
+        {
+            nombre: "Grupo 4",
+            imagen: "/imagenes/grupo4.png",
+            audio: "/musica/grupo4.mp3",
+        },
+        {
+            nombre: "Grupo 5",
+            imagen: "/imagenes/grupo5.png",
+            audio: "/musica/grupo5.mp3",
+        },
+        {
+            nombre: "Grupo 6",
+            imagen: "/imagenes/grupo6.png",
+            audio: "/musica/grupo6.mp3",
+        },
+        {
+            nombre: "Grupo 7",
+            imagen: "/imagenes/grupo7.png",
+            audio: "/musica/grupo7.mp3",
+        },
+        {
+            nombre: "Grupo 8",
+            imagen: "/imagenes/grupo8.png",
+            audio: "/musica/grupo8.mp3",
+        },
+        {
+            nombre: "Grupo 9",
+            imagen: "/imagenes/grupo9.png",
+            audio: "/musica/grupo9.mp3",
+        },
+        {
+            nombre: "Grupo 10",
+            imagen: "/imagenes/grupo10.png",
+            audio: "/musica/grupo10.mp3",
+        },
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // ── CONSTRUIR CARDS ──
+        const grid = document.getElementById("cartelera-grid");
+
+        grupos.forEach((g, i) => {
+            if (!grid) return;
+
+            const card = document.createElement("div");
+            card.className = "grupo-card opacity-0";
+            card.style.cssText = `
+                border-radius: 16px;
+                border: 1px solid rgba(156,122,46,0.25);
+                overflow: hidden;
+                background: rgba(15,61,46,0.04);
+                display: flex;
+                flex-direction: column;
+            `;
+
+            card.innerHTML = `
+                <!-- Nombre -->
+                <div style="padding: 8px 10px 6px; text-align:center; border-bottom: 1px solid rgba(156,122,46,0.15);">
+                    <p style="color:#9C7A2E; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; font-weight:600; line-height:1.2;">${g.nombre}</p>
+                </div>
+
+                <!-- Imagen -->
+                <div style="position:relative; overflow:hidden; aspect-ratio:1/1;">
+                    <img
+                        src="${g.imagen}"
+                        alt="${g.nombre}"
+                        style="width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.5s ease;"
+                        class="card-img"
+                    />
+                    <!-- Overlay dorado sutil -->
+                    <div style="position:absolute; inset:0; background: linear-gradient(to bottom, transparent 50%, rgba(15,61,46,0.6) 100%); pointer-events:none;"></div>
+                </div>
+
+                <!-- Botón escuchar -->
+                <button
+                    class="btn-escuchar"
+                    data-index="${i}"
+                    style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 6px;
+                        padding: 9px 8px;
+                        background: #4E5F49;
+                        color: white;
+                        border: none;
+                        cursor: pointer;
+                        font-size: 11px;
+                        letter-spacing: 0.12em;
+                        text-transform: uppercase;
+                        font-weight: 600;
+                        transition: background 0.3s;
+                        width: 100%;
+                    "
+                >
+                    <svg width="13" height="13" fill="white" viewBox="0 0 24 24">
+                        <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+                    </svg>
+                    Escuchar
+                </button>
+            `;
+
+            // Hover imagen
+            const img = card.querySelector(".card-img") as HTMLElement;
+            card.addEventListener("mouseenter", () => {
+                if (img) img.style.transform = "scale(1.06)";
+            });
+            card.addEventListener("mouseleave", () => {
+                if (img) img.style.transform = "scale(1)";
+            });
+
+            // Hover botón
+            const btn = card.querySelector(".btn-escuchar") as HTMLElement;
+            btn.addEventListener("mouseenter", () => {
+                btn.style.background = "#9C7A2E";
+            });
+            btn.addEventListener("mouseleave", () => {
+                const idx = parseInt(btn.getAttribute("data-index") || "0");
+                btn.style.background =
+                    audioActivo === idx ? "#9C7A2E" : "#4E5F49";
+            });
+
+            grid.appendChild(card);
+        });
+
+        // ── ANIMACIÓN SCROLL ──
+        gsap.set("#cartelera-titulo", { opacity: 0, y: 20 });
+        gsap.set("#credito-cartelera", { opacity: 0 });
+        gsap.set(".grupo-card", { opacity: 0, y: 24 });
+
+        ScrollTrigger.create({
+            trigger: "#seccion-cartelera",
+            start: "top 85%",
+            onEnter: () => {
+                const tl = gsap.timeline();
+                tl.to("#cartelera-titulo", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.9,
+                    ease: "power3.out",
+                })
+                    .to(
+                        ".grupo-card",
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            stagger: 0.08,
+                        },
+                        "-=0.4",
+                    )
+                    .to(
+                        "#credito-cartelera",
+                        { opacity: 1, duration: 0.6 },
+                        "-=0.2",
+                    );
+            },
+            onLeaveBack: () => {
+                gsap.set("#cartelera-titulo", { opacity: 0, y: 20 });
+                gsap.set(".grupo-card", { opacity: 0, y: 24 });
+                gsap.set("#credito-cartelera", { opacity: 0 });
+            },
+        });
+
+        // ── AUDIO PLAYER ──
+        let audioActivo: number | null = null;
+        let audioEl: HTMLAudioElement | null = null;
+        let rafProgreso: number | null = null;
+
+        const player = document.getElementById("audio-player") as HTMLElement;
+        const playerImg = document.getElementById(
+            "player-img",
+        ) as HTMLImageElement;
+        const playerNombre = document.getElementById(
+            "player-nombre",
+        ) as HTMLElement;
+        const progressFill = document.getElementById(
+            "progress-fill",
+        ) as HTMLElement;
+        const progressBar = document.getElementById(
+            "progress-bar",
+        ) as HTMLElement;
+        const timeCurrent = document.getElementById(
+            "time-current",
+        ) as HTMLElement;
+        const timeTotal = document.getElementById("time-total") as HTMLElement;
+        const btnPlayPause = document.getElementById(
+            "btn-play-pause",
+        ) as HTMLElement;
+        const iconPlay = document.getElementById("icon-play") as HTMLElement;
+        const iconPause = document.getElementById("icon-pause") as HTMLElement;
+        const btnCerrar = document.getElementById(
+            "btn-cerrar-player",
+        ) as HTMLElement;
+
+        function fmt(s: number) {
+            const m = Math.floor(s / 60);
+            const ss = Math.floor(s % 60)
+                .toString()
+                .padStart(2, "0");
+            return `${m}:${ss}`;
+        }
+
+        function tickProgreso() {
+            if (!audioEl) return;
+            const pct = audioEl.duration
+                ? (audioEl.currentTime / audioEl.duration) * 100
+                : 0;
+            progressFill.style.width = `${pct}%`;
+            timeCurrent.textContent = fmt(audioEl.currentTime);
+            rafProgreso = requestAnimationFrame(tickProgreso);
+        }
+
+        function mostrarPlayer(show: boolean) {
+            player.style.transform = show
+                ? "translateY(0)"
+                : "translateY(100%)";
+        }
+
+        function setIconPlay(playing: boolean) {
+            iconPlay.classList.toggle("hidden", playing);
+            iconPause.classList.toggle("hidden", !playing);
+        }
+
+        function actualizarBotones() {
+            document.querySelectorAll(".btn-escuchar").forEach((b) => {
+                const el = b as HTMLElement;
+                const idx = parseInt(el.getAttribute("data-index") || "0");
+                el.style.background =
+                    idx === audioActivo ? "#9C7A2E" : "#4E5F49";
+                el.innerHTML =
+                    idx === audioActivo
+                        ? `<svg width="13" height="13" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> Pausar`
+                        : `<svg width="13" height="13" fill="white" viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg> Escuchar`;
+            });
+        }
+
+        function reproducir(idx: number) {
+            const g = grupos[idx];
+
+            // Si es el mismo grupo → toggle play/pause
+            if (audioActivo === idx && audioEl) {
+                if (audioEl.paused) {
+                    audioEl.play();
+                    setIconPlay(true);
+                    rafProgreso = requestAnimationFrame(tickProgreso);
+                } else {
+                    audioEl.pause();
+                    setIconPlay(false);
+                    if (rafProgreso) cancelAnimationFrame(rafProgreso);
+                }
+                actualizarBotones();
+                return;
+            }
+
+            // Nuevo grupo
+            if (audioEl) {
+                audioEl.pause();
+                audioEl.src = "";
+            }
+            if (rafProgreso) cancelAnimationFrame(rafProgreso);
+
+            audioActivo = idx;
+            audioEl = new Audio(g.audio);
+
+            playerImg.src = g.imagen;
+            playerImg.alt = g.nombre;
+            playerNombre.textContent = g.nombre;
+            progressFill.style.width = "0%";
+            timeCurrent.textContent = "0:00";
+            timeTotal.textContent = "0:00";
+
+            audioEl.addEventListener("loadedmetadata", () => {
+                timeTotal.textContent = fmt(audioEl!.duration);
+            });
+            audioEl.addEventListener("ended", () => {
+                setIconPlay(false);
+                progressFill.style.width = "0%";
+                if (rafProgreso) cancelAnimationFrame(rafProgreso);
+                audioActivo = null;
+                actualizarBotones();
+            });
+
+            audioEl
+                .play()
+                .then(() => {
+                    setIconPlay(true);
+                    rafProgreso = requestAnimationFrame(tickProgreso);
+                    mostrarPlayer(true);
+                    actualizarBotones();
+                })
+                .catch(() => {
+                    console.warn("No se pudo reproducir el audio.");
+                });
+        }
+
+        // Clicks en botones de cards
+        document.addEventListener("click", (e) => {
+            const btn = (e.target as HTMLElement).closest(
+                ".btn-escuchar",
+            ) as HTMLElement | null;
+            if (!btn) return;
+            const idx = parseInt(btn.getAttribute("data-index") || "0");
+            reproducir(idx);
+        });
+
+        // Play/pause del player flotante
+        btnPlayPause?.addEventListener("click", () => {
+            if (audioActivo === null || !audioEl) return;
+            reproducir(audioActivo);
+        });
+
+        // Cerrar player
+        btnCerrar?.addEventListener("click", () => {
+            if (audioEl) {
+                audioEl.pause();
+                audioEl.src = "";
+                audioEl = null;
+            }
+            if (rafProgreso) cancelAnimationFrame(rafProgreso);
+            setIconPlay(false);
+            audioActivo = null;
+            mostrarPlayer(false);
+            actualizarBotones();
+        });
+
+        // Barra de progreso clickeable
+        progressBar?.addEventListener("click", (e) => {
+            if (!audioEl || !audioEl.duration) return;
+            const rect = progressBar.getBoundingClientRect();
+            const pct = (e.clientX - rect.left) / rect.width;
+            audioEl.currentTime = pct * audioEl.duration;
+        });
+    });
+</script>
