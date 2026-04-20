@@ -383,7 +383,6 @@
             const fotos = Array.from({ length: 17 }, (_, i) => ({
                 src: `/imagenes/foto${i + 1}.webp`,
                 alt: `Foto ${i + 1}`,
-                position: i === 14 ? "left center" : "center center",
             }));
 
             const DURACION = 4500;
@@ -404,7 +403,7 @@
                     <div class="w-full h-full overflow-hidden">
                         <img src="${foto.src}" alt="${foto.alt}"
                             class="slide-img w-full h-full object-cover"
-                            style="transform-origin: ${i === 14 ? 'left center' : 'center center'}; object-position: ${foto.position};" />
+                            style="transform-origin: center center;" />
                     </div>
                     <div class="absolute inset-0"
                         style="background: linear-gradient(135deg, rgba(156,122,46,0.06) 0%, transparent 50%, rgba(15,61,46,0.06) 100%);">
@@ -470,19 +469,6 @@
                     ".slide-img",
                 ) as HTMLElement;
                 if (!img) return;
-                if (index === 15) {
-                    img.style.transformOrigin = "left center";
-                    gsap.set(img, { scale: 1, x: "0%", y: "0%" });
-                    kbTween = gsap.to(img, {
-                        scale: 1.07,
-                        x: "1%",
-                        y: "-1%",
-                        duration: DURACION / 1000 + 1,
-                        ease: "none",
-                    });
-                    return;
-                }
-                img.style.transformOrigin = "center center";
                 gsap.set(img, { scale: 1, x: "0%", y: "0%" });
                 const dirs = [
                     { scale: 1.08, x: "-2%", y: "-2%" },
